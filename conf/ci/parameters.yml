@@ -1,0 +1,5 @@
+sales:
+  data_dir: data/ci_fixture
+  output_dir: data/ci_output/08_reporting
+  trials: 2
+  chunksize: 47

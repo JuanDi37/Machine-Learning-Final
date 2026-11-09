@@ -1,0 +1,25 @@
+name: Validación comercial
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -e '.[dev]'
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: pytest -q
+      - run: python -m scripts.make_ci_fixture
+      - run: kedro run --env ci
+      - uses: actions/upload-artifact@v4
+        with:
+          name: validacion-sintetica-no-resultados-reales
+          path: data/ci_output/08_reporting/

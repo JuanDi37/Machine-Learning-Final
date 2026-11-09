@@ -1,0 +1,52 @@
+inventory:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/inventario.csv
+
+quality:
+  type: json.JSONDataset
+  filepath: data/08_reporting/calidad.json
+
+daily:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/ventas_diarias.csv
+
+seller_daily:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/vendedores_diarios.csv
+
+seller_summary:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/desempeno_vendedores.csv
+
+monthly:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/tendencia_mensual.csv
+
+weekday:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/patron_semanal.csv
+
+model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/pronostico.pkl
+
+model_metrics:
+  type: json.JSONDataset
+  filepath: data/08_reporting/metricas_modelo.json
+
+predictions:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/evaluacion_temporal.csv
+
+trials:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/optuna.csv
+
+forecast:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/pronostico_7_dias.csv
+
+business_summary:
+  type: json.JSONDataset
+  filepath: data/08_reporting/resumen_negocio.json
+

@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+data/02_intermediate/
+data/06_models/
+data/08_reporting/
+data/ci_fixture/
+data/ci_output/
+logs/
+*.egg-info/
+.coverage
+
