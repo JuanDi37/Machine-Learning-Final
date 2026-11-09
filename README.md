@@ -20,14 +20,15 @@ Python 3.12, desde la raíz del repositorio:
 
 ```powershell
 python -m venv .venv
-.venv\Scripts\python -m pip install -e ".[dev]"
-.venv\Scripts\kedro run --pipeline discovery
+.venv\Scripts\python -m pip install -r requirements-lock.txt
+.venv\Scripts\python -m pip install --no-deps -e ".[dev]"
+.venv\Scripts\kedro run --pipelines discovery
 .venv\Scripts\kedro run
 ```
 
 En Linux/macOS, los ejecutables del entorno se encuentran en `.venv/bin/`.
 
-`kedro run --pipeline discovery` funciona con los archivos actuales y produce `data/08_reporting/inventario.csv`. La ejecución completa se detiene con una **NOTA** que identifica la tabla faltante. Las fuentes se buscan en la carpeta configurada, su subcarpeta `dataset/` y `data/01_raw/`; no se descarga ni se inventa el dataset. Dos fuentes para una misma tabla se rechazan por ambigüedad. Las siete tablas deben estar presentes y tener claves consistentes.
+`kedro run --pipelines discovery` funciona con los archivos actuales y produce `data/08_reporting/inventario.csv`. La ejecución completa se detiene con una **NOTA** que identifica la tabla faltante. Las fuentes se buscan en la carpeta configurada, su subcarpeta `dataset/` y `data/01_raw/`; no se descarga ni se inventa el dataset. Dos fuentes para una misma tabla se rechazan por ambigüedad. Las siete tablas deben estar presentes y tener claves consistentes.
 
 Los parámetros de ejecución, unidades de descuento, origen del importe, período, semilla, presupuesto Optuna y umbral de aceptación están documentados en `conf/base/parameters.yml`. El catálogo está en `conf/base/catalog.yml`. El notebook `01_desempeno_ventas.ipynb` presenta el diagnóstico y permite ejecutar el mismo pipeline.
 
@@ -65,6 +66,8 @@ Una ejecución completa con transacciones válidas produce:
 
 El artefacto pickle se carga únicamente desde ejecuciones propias. El notebook original `intro.ipynb` se conserva como referencia; sus outputs históricos no se usan como fuente de entrenamiento.
 
+La interpretación del candidato incluye importancia por permutación de variables, calculada exclusivamente en validación y expresada como aumento de MAE en UM. **NOTA: pocos días y variables correlacionadas limitan su estabilidad; no representa un efecto causal.**
+
 ## Validación automatizada
 
 ```powershell
@@ -82,3 +85,7 @@ El artefacto pickle se carga únicamente desde ejecuciones propias. El notebook 
 La solución se limita al desempeño de ventas y del personal. El análisis de clientes y portafolio de productos solo se utiliza para validar las relaciones del dataset. El perfil para contratación se desarrolla como competencias a evaluar, sin atribuir causalidad al desempeño histórico.
 
 **NOTA: la entrega final con métricas reales, modelo entrenado sobre el supermercado y recomendaciones sustentadas está pendiente de las transacciones.** El enlace del repositorio configurado es https://github.com/JuanDi37/Machine-Learning-Final. La configuración de GitHub Actions está incluida; su ejecución remota debe verificarse en GitHub después de publicar los cambios.
+
+El avance documentado se puede revisar en [el reporte parcial](docs/reporte_parcial.pdf), [la diapositiva](docs/presentacion_parcial.pdf) y [su fuente de texto](docs/reporte_parcial.md). Se regeneran con `python -m scripts.partial_report`.
+
+**NOTA: el workflow aún no se ha ejecutado en GitHub; la validación realizada es local.**

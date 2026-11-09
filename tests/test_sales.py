@@ -40,11 +40,17 @@ def test_schema_not_filename_and_revenue_conservation(context):
     assert monthly.complete_month.all()
 
 
-@pytest.mark.parametrize("fault, message", [
-    ("duplicate", "duplicado"), ("orphan", "Referencia"),
-    ("discount", "Descuentos"), ("ticket", "múltiples"),
-    ("missing_day", "días sin registros"), ("zero_recorded", "cero"),
-])
+@pytest.mark.parametrize(
+    "fault, message",
+    [
+        ("duplicate", "duplicado"),
+        ("orphan", "Referencia"),
+        ("discount", "Descuentos"),
+        ("ticket", "múltiples"),
+        ("missing_day", "días sin registros"),
+        ("zero_recorded", "cero"),
+    ],
+)
 def test_reject_invalid_business_data(context, fault, message):
     root, params, tables = context
     sales = tables["sales"].copy()
@@ -79,7 +85,7 @@ def test_ticket_split_across_chunks_is_counted_once(context):
 
 def test_features_cannot_observe_future():
     history = pd.Series(np.arange(50), index=pd.date_range("2018-01-01", periods=50))
-    row = features(history, history.index[-1] + pd.Timedelta(days=7), 7)
+    row = features(history, history.index[-1] + pd.DateOffset(days=7), 7)
     assert row["lag_week"] == history.iloc[-1]
     assert row["last"] == 49
     assert row["mean_7"] == history.iloc[-7:].mean()
@@ -98,3 +104,4 @@ def test_temporal_model_and_artifact(context):
     assert len(trials) == 2
     assert artifact["history"].index[-1] < forecast.date.min()
     assert metrics["holdout_start"] == "2018-05-04"
+    assert "mean_7" in metrics["validation_feature_importance_mae_um"]

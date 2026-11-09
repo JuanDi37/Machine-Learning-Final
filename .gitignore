@@ -11,4 +11,5 @@ data/ci_output/
 logs/
 *.egg-info/
 .coverage
+*.log
 

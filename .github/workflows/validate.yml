@@ -7,13 +7,16 @@ jobs:
       OMP_NUM_THREADS: '2'
       OPENBLAS_NUM_THREADS: '2'
       MPLBACKEND: Agg
+      KEDRO_DISABLE_TELEMETRY: '1'
+      PYTHONUTF8: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: pip
-      - run: pip install -e '.[dev]'
+      - run: pip install -r requirements-lock.txt
+      - run: pip install --no-deps -e '.[dev]'
       - run: ruff check .
       - run: ruff format --check .
       - run: pytest -q

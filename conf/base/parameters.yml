@@ -1,6 +1,7 @@
 sales:
   data_dir: .
   output_dir: data/08_reporting
+  synthetic_data: false
   chunksize: 250000
   # recorded requiere confirmar que TotalPrice representa ingreso neto real.
   # catalog_estimate calcula Quantity * Price * (1 - Discount); no es facturación auditada.
@@ -8,7 +9,7 @@ sales:
   discount_scale: fraction
   expected_start: '2018-01-01'
   expected_end: '2018-05-31'
-  # Solo activar después de confirmar que días ausentes significan cero ventas.
+  # Los días ausentes no equivalen a cero ventas sin validación del origen.
   missing_days_are_zero: false
   # Horizonte de siete días: las variables solo usan información previa al origen.
   horizon: 7
@@ -16,6 +17,7 @@ sales:
   cv_folds: 3
   min_train_days: 56
   trials: 25
+  model_threads: 2
   seed: 42
   required_improvement: 0.05
   min_seller_days: 28
